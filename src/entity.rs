@@ -9,7 +9,7 @@ use crate::{
 /// A bundle with all the required components for a terminal.
 ///
 /// Can specify some properties of the terminal on initilaization.
-#[derive(Bundle, Default)]
+#[derive(Bundle, Component, Default)]
 pub struct TerminalBundle {
     pub terminal: Terminal,
     pub renderer: renderer::TerminalRenderBundle,
