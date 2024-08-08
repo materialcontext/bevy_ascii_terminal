@@ -14,7 +14,7 @@ version = "0.15.3"
 [dependencies]
 bitflags = "2.4.0"
 arrayvec = "0.7.2"
-bevy_tiled_camera = { git = "https://github.com/materialcontext/bevy_tiled_camera.git", version = "0.9.1" }
+bevy_tiled_camera = { git = "https://github.com/materialcontext/bevy_tiled_camera.git", version = "0.9.1", optional = true }
 sark_grids = { version = "0.5.9" }
 
 [dependencies.bevy]
