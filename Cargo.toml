@@ -14,14 +14,14 @@ version = "0.15.3"
 [dependencies]
 bitflags = "2.4.0"
 arrayvec = "0.7.2"
-bevy_tiled_camera = { git = "https://github.com/materialcontext/bevy_tiled_camera.git" version = "0.9.1" }
+bevy_tiled_camera = { git = "https://github.com/materialcontext/bevy_tiled_camera.git", version = "0.9.1" }
 sark_grids = { version = "0.5.9" }
 
 [dependencies.bevy]
 version = "0.14.1"
 
 [dev-dependencies]
-bevy_tiled_camera = { git = "https://github.com/materialcontext/bevy_tiled_camera.git" version = "0.9.1" }
+bevy_tiled_camera = { git = "https://github.com/materialcontext/bevy_tiled_camera.git", version = "0.9.1" }
 bracket-noise = "0.8.2"
 bracket-random = "0.8.2"
 rand = "0.8.4"
