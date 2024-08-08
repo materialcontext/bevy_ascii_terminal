@@ -12,12 +12,13 @@ use bevy::{
     },
     reflect::TypePath,
     render::{
-        mesh::MeshVertexBufferLayout,
+        mesh::MeshVertexBufferLayoutRef,
         render_asset::RenderAssets,
         render_resource::{
             AsBindGroup, AsBindGroupShaderType, RenderPipelineDescriptor, ShaderRef, ShaderType,
             SpecializedMeshPipelineError,
         },
+        texture::GpuImage,
     },
     sprite::{Material2d, Material2dKey, Material2dPlugin},
 };
@@ -45,26 +46,26 @@ impl Plugin for TerminalMaterialPlugin {
             Material2dPlugin::<TerminalMaterial>::default(),
         ));
 
-        let mut shaders = app.world.get_resource_mut::<Assets<Shader>>().expect(
+        let mut shaders = app.world_mut().get_resource_mut::<Assets<Shader>>().expect(
             "Error initializing TerminalPlugin. Ensure TerminalPlugin is added AFTER
             DefaultPlugins during app initialization. (issue #1255)",
         );
 
         shaders.insert(
-            TERMINAL_MATERIAL_SHADER_HANDLE,
+            &TERMINAL_MATERIAL_SHADER_HANDLE,
             Shader::from_wgsl(include_str!("terminal.wgsl"), "terminal.wgsl"),
         );
 
         let fonts = app
-            .world
+            .world_mut()
             .get_resource::<BuiltInFontHandles>()
             .expect("Couldn't get font handles");
         let font = fonts.get(&TerminalFont::default());
         let material = TerminalMaterial::from(font.clone());
 
-        app.world
+        app.world_mut()
             .resource_mut::<Assets<TerminalMaterial>>()
-            .insert(Handle::<TerminalMaterial>::default(), material);
+            .insert(&Handle::<TerminalMaterial>::default(), material);
     }
 }
 
@@ -114,17 +115,24 @@ struct TerminalMaterialUniform {
     pub flags: u32,
 }
 
+impl TerminalMaterialUniform {
+    fn from_color(color: Color, flags: u32) -> TerminalMaterialUniform {
+        let linear = color.to_linear();
+        TerminalMaterialUniform {
+            color: Vec4::from_array([linear.red, linear.green, linear.blue, linear.alpha]),
+            flags,
+        }
+    }
+}
+
 impl AsBindGroupShaderType<TerminalMaterialUniform> for TerminalMaterial {
-    fn as_bind_group_shader_type(&self, _: &RenderAssets<Image>) -> TerminalMaterialUniform {
+    fn as_bind_group_shader_type(&self, _: &RenderAssets<GpuImage>) -> TerminalMaterialUniform {
         let mut flags = TerminalMaterialFlags::NONE;
         if self.texture.is_some() {
             flags |= TerminalMaterialFlags::TEXTURE;
         }
 
-        TerminalMaterialUniform {
-            color: self.bg_clip_color.as_linear_rgba_f32().into(),
-            flags: flags.bits(),
-        }
+        TerminalMaterialUniform::from_color(self.bg_clip_color, flags.bits())
     }
 }
 
@@ -139,10 +147,10 @@ impl Material2d for TerminalMaterial {
 
     fn specialize(
         descriptor: &mut RenderPipelineDescriptor,
-        layout: &MeshVertexBufferLayout,
+        layout: &MeshVertexBufferLayoutRef,
         _: Material2dKey<Self>,
     ) -> Result<(), SpecializedMeshPipelineError> {
-        let vertex_layout = layout.get_layout(&[
+        let vertex_layout = layout.0.get_layout(&[
             Mesh::ATTRIBUTE_POSITION.at_shader_location(0),
             ATTRIBUTE_UV.at_shader_location(1),
             ATTRIBUTE_COLOR_BG.at_shader_location(2),

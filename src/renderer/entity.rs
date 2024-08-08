@@ -43,8 +43,8 @@ impl TerminalRenderBundle {
     }
 }
 
-#[derive(Component)]
-pub(crate) struct TerminalBorder;
+// #[derive(Component)]
+// pub(crate) struct TerminalBorder;
 
 #[cfg(test)]
 mod test {

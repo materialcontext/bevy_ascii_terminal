@@ -151,7 +151,7 @@ impl Plugin for TerminalFontPlugin {
         let font_map = &mut fonts.map;
 
         let mut images = app
-            .world
+            .world_mut()
             .get_resource_mut::<Assets<Image>>()
             .unwrap_or_else(|| {
                 panic!(

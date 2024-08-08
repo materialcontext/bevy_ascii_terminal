@@ -1,9 +1,9 @@
 use bevy::{
-    prelude::{Color, Component, Mesh, Vec2, Vec3},
+    prelude::{Color, Component, Mesh, Vec2, Vec3}, 
     render::{
         mesh::{Indices, MeshVertexAttribute, VertexAttributeValues},
         render_resource::VertexFormat,
-    },
+    }
 };
 use sark_grids::{point::Point2d, GridPoint};
 
@@ -147,6 +147,11 @@ pub struct UvMesher<'a> {
     tile_data: &'a mut TileData,
 }
 
+fn color_to_arr(color: Color) -> [f32; 4] {
+    let linear = color.to_linear();
+    [linear.red, linear.green, linear.blue, linear.alpha]
+}
+
 impl<'a> UvMesher<'a> {
     pub fn new(mapping: &'a UvMapping, tile_data: &'a mut TileData) -> Self {
         Self { mapping, tile_data }
@@ -159,16 +164,15 @@ impl<'a> UvMesher<'a> {
         let glyph_uv = self.mapping.uvs_from_glyph(glyph);
         td.uvs.extend(glyph_uv);
         td.fg
-            .extend(std::iter::repeat(fg.as_linear_rgba_f32()).take(4));
+            .extend(std::iter::repeat(color_to_arr(fg)).take(4));
         td.bg
-            .extend(std::iter::repeat(bg.as_linear_rgba_f32()).take(4));
+            .extend(std::iter::repeat(color_to_arr(bg)).take(4));
     }
 }
 
 #[cfg(test)]
 mod test {
-    use bevy::prelude::Color;
-
+    use bevy::color::palettes::basic::{BLUE, YELLOW};
     use crate::renderer::uv_mapping::UvMapping;
 
     use super::*;
@@ -187,7 +191,7 @@ mod test {
         let mut td = TileData::default();
         let mut mesher = UvMesher::new(&mapping, &mut td);
 
-        mesher.tile_uvs('a', Color::BLUE, Color::YELLOW);
+        mesher.tile_uvs('a', Color::Srgba(BLUE), Color::Srgba(YELLOW));
 
         assert_eq!(4, td.uvs.len());
         assert_eq!(4, td.fg.len());

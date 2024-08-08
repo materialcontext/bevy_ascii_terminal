@@ -132,7 +132,7 @@ fn update_from_camera(
             }
 
             tw.camera_pos = t.translation();
-            tw.ndc_to_world = t.compute_matrix() * cam.projection_matrix().inverse();
+            tw.ndc_to_world = t.compute_matrix() * cam.clip_from_view().inverse();
 
             if let Some(vp) = &cam.viewport {
                 tw.viewport_pos = vp.physical_position.as_vec2();

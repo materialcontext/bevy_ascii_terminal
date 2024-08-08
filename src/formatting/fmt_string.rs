@@ -140,6 +140,7 @@ impl<'a> From<FormattedString<'a>> for (Cow<'a, str>, ArrayVec<StringModifier, 3
 #[cfg(test)]
 mod test {
     use bevy::prelude::Color;
+    use bevy::color::palettes::basic::GREEN;
     use sark_grids::{GridPoint, Pivot};
 
     use crate::Terminal;
@@ -149,9 +150,9 @@ mod test {
     #[test]
     fn string_color() {
         let mut term = Terminal::new([15, 15]);
-        term.put_string([5, 5], "Hello".fg(Color::GREEN));
+        term.put_string([5, 5], "Hello".fg(Color::Srgba(GREEN)));
 
-        assert_eq!(term.get_tile([5, 5]).fg_color, Color::GREEN);
+        assert_eq!(term.get_tile([5, 5]).fg_color, Color::Srgba(GREEN));
     }
 
     #[test]

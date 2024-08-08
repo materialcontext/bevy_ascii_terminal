@@ -81,9 +81,9 @@ impl Plugin for UvMappingPlugin {
     fn build(&self, app: &mut bevy::prelude::App) {
         app.init_asset::<UvMapping>()
             .add_systems(Update, uv_mapping_loaded);
-        app.world
+        app.world_mut()
             .resource_mut::<Assets<UvMapping>>()
-            .insert(Handle::<UvMapping>::default(), UvMapping::code_page_437());
+            .insert(&Handle::<UvMapping>::default(), UvMapping::code_page_437());
     }
 }
 

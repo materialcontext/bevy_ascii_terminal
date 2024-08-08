@@ -74,8 +74,8 @@ impl Tile {
     pub fn transparent() -> Tile {
         Tile {
             glyph: ' ',
-            fg_color: Color::rgba_u8(0, 0, 0, 0),
-            bg_color: Color::rgba_u8(0, 0, 0, 0),
+            fg_color: Color::srgba_u8(0, 0, 0, 0),
+            bg_color: Color::srgba_u8(0, 0, 0, 0),
         }
     }
 }
@@ -499,11 +499,11 @@ impl Terminal {
         bounds
     }
 }
-
+ 
 #[cfg(test)]
 mod tests {
-
     use super::*;
+    use bevy::color::palettes::basic::RED;
 
     #[test]
     fn put_char() {
@@ -513,11 +513,11 @@ mod tests {
 
         assert_eq!('h', term.get_char([5, 5]));
 
-        term.put_char([1, 2], 'q'.fg(Color::RED));
+        term.put_char([1, 2], 'q'.fg(Color::Srgba(RED)));
 
         let t = term.get_tile([1, 2]);
         assert_eq!('q', t.glyph);
-        assert_eq!(Color::RED, t.fg_color);
+        assert_eq!(Color::Srgba(RED), t.fg_color);
     }
 
     #[test]
