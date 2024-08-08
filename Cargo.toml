@@ -9,7 +9,7 @@ license = "MIT"
 name = "bevy_ascii_terminal"
 readme = "README.md"
 repository = "https://github.com/sarkahn/bevy_ascii_terminal"
-version = "0.15.0"
+version = "0.15.1"
 
 [dependencies]
 bitflags = "2.4.0"
@@ -29,12 +29,12 @@ bracket-random = "0.8.2"
 rand = "0.8.4"
 
 [dev-dependencies.bevy]
-version = "0.13"
+version = "0.15"
 default-features = false
 features = ["png", "bevy_winit", "bevy_render"]
 
 [target.'cfg(unix)'.dev-dependencies.bevy]
-version = "0.13"
+version = "0.15"
 default-features = false
 features = ["png", "bevy_winit", "bevy_render", "x11"]
 
