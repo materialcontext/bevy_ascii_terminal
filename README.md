@@ -25,7 +25,7 @@ fn setup(mut commands: Commands) {
     // Create the terminal
     let mut terminal = Terminal::new([20,3]).with_border(Border::single_line());
     // Draw a blue "Hello world!" to the terminal
-    terminal.put_string([1, 1], "Hello world!".fg(Color::BLUE));
+    terminal.put_string([1, 1], "Hello world!".fg(Color::Srgba(BLUE)));
 
     commands.spawn((
         // Spawn the terminal bundle from our terminal

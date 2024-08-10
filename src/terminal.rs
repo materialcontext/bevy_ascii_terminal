@@ -28,11 +28,11 @@ use crate::TileFormatter;
 /// ```rust
 /// use bevy_ascii_terminal::*;
 /// use bevy::prelude::Color;
-///
+/// use bevy::color::palettes::basic::{RED, BLUE};
 /// let mut term = Terminal::new([10,10]);
 ///
-/// term.put_char([1,1], 'h'.fg(Color::RED));
-/// term.put_string([2,1], "ello".bg(Color::BLUE));
+/// term.put_char([1,1], 'h'.fg(Color::Srgba(RED)));
+/// term.put_string([2,1], "ello".bg(Color::Srgba(BLUE)));
 ///
 /// let hello = term.get_string([1,1], 5);
 /// ```
@@ -222,10 +222,11 @@ impl Terminal {
     /// ```rust
     /// use bevy_ascii_terminal::prelude::*;
     /// use bevy::prelude::Color;
+    /// use bevy::color::palettes::basic::{RED, BLUE};
     ///
     /// let mut term = Terminal::new([10,10]);
     /// // Insert an 'a' with a blue foreground and a red background.
-    /// term.put_char([2,3], 'a'.fg(Color::BLUE).bg(Color::RED));
+    /// term.put_char([2,3], 'a'.fg(Color::Srgba(BLUE)).bg(Color::Srgba(RED)));
     /// // Replace the 'a' with a 'q'. Foreground and background color will be
     /// // unaffected
     /// term.put_char([2,3], 'q');
@@ -242,10 +243,11 @@ impl Terminal {
     /// ```rust
     /// use bevy::prelude::*;
     /// use bevy_ascii_terminal::prelude::*;
+    /// use bevy::color::palettes::basic::BLUE;
     /// let mut term = Terminal::new([10,10]);
     ///
     /// // Set the background color for the given tile to blue.
-    /// term.put_color([3,3], Color::BLUE.bg());
+    /// term.put_color([3,3], Color::Srgba(BLUE).bg());
     /// ```
     pub fn put_color(&mut self, xy: impl GridPoint, color: ColorFormat) {
         let tile = self.get_tile_mut(xy);
@@ -273,12 +275,13 @@ impl Terminal {
     /// ```rust
     /// use bevy_ascii_terminal::prelude::*;
     /// use bevy::prelude::Color;
+    /// use bevy::color::palettes::basic::{GREEN, BLUE};
     ///
     /// let mut term = Terminal::new([10,10]);
     /// // Write a blue "Hello" to the terminal
-    /// term.put_string([1,2], "Hello".fg(Color::BLUE));
+    /// term.put_string([1,2], "Hello".fg(Color::Srgba(BLUE)));
     /// // Write "Hello" with a green background
-    /// term.put_string([2,1], "Hello".bg(Color::GREEN));
+    /// term.put_string([2,1], "Hello".bg(Color::Srgba(GREEN)));
     /// ```
     ///
     /// You can also specify a `Pivot` for the string via the `pivot` function.

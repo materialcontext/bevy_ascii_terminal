@@ -42,7 +42,7 @@ fn rand_color(rng: &mut ThreadRng) -> Color {
     let r: f32 = rng.gen_range(0.0..=1.0);
     let g: f32 = rng.gen_range(0.0..=1.0);
     let b: f32 = rng.gen_range(0.0..=1.0);
-    Color::rgb(r, g, b)
+    Color::srgba(r, g, b, 1.0)
 }
 
 fn spam_terminal(

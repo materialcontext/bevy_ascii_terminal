@@ -16,10 +16,12 @@ use crate::{Terminal, Tile};
 /// ```rust
 /// use bevy::prelude::Color;
 /// use bevy_ascii_terminal::prelude::*;
+/// use bevy::color::palettes::basic::{GREEN, BLUE};
+///
 /// let mut term = Terminal::new([10,10]);
 ///
 /// // Insert a an 'a' character with a blue foreground and green background.
-/// term.put_char([1,1], 'a'.fg(Color::BLUE).bg(Color::GREEN));
+/// term.put_char([1,1], 'a'.fg(Color::Srgba(BLUE)).bg(Color::Srgba(GREEN)));
 /// ```
 pub trait TileFormatter: Clone {
     /// Change the glyph of a tile.
@@ -179,10 +181,12 @@ impl From<Tile> for FormattedTile {
 /// ```rust
 /// use bevy::prelude::Color;
 /// use bevy_ascii_terminal::prelude::*;
+/// use bevy::color::palettes::basic::{RED, GREEN, BLUE};
+///
 /// let mut term = Terminal::new([10,10]);
 ///
 /// // Set the background color for the given tile to blue.
-/// term.put_color([3,3], Color::BLUE.bg());
+/// term.put_color([3,3], Color::Srgba(BLUE).bg());
 /// ```
 pub trait ColorFormatter {
     fn fg(&self) -> ColorFormat;

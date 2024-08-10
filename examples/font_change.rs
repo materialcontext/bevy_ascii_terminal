@@ -1,6 +1,7 @@
 use bevy::{
     prelude::*,
     reflect::{DynamicEnum, DynamicVariant, Enum},
+    color::palettes::css::{WHITE, RED, MIDNIGHT_BLUE}
 };
 use bevy_ascii_terminal::{prelude::*, TerminalFont};
 
@@ -27,13 +28,13 @@ fn spawn_terminal(mut commands: Commands) {
     let size = [47, 13];
     let font = TerminalFont::default();
     let mut term = Terminal::new(size)
-        .with_clear_tile(' '.fg(Color::WHITE).bg(Color::MIDNIGHT_BLUE))
+        .with_clear_tile(' '.fg(Color::Srgba(WHITE)).bg(Color::Srgba(MIDNIGHT_BLUE)))
         .with_border(
             Border::single_line().with_title(
                 font.variant_name()
                     .to_uppercase()
                     .aligned(0.1)
-                    .fg_col(Color::RED),
+                    .fg_col(Color::Srgba(RED)),
             ),
         );
 
