@@ -41,7 +41,7 @@ struct VertexOutput {
 @vertex
 fn vertex(vertex: Vertex) -> VertexOutput {
     var out: VertexOutput;
-    var model = mesh_functions::get_model_matrix(vertex.instance_index);
+    var model = mesh_functions::get_world_from_local(vertex.instance_index);
     var world_position = mesh_functions::mesh2d_position_local_to_world(model, vec4<f32>(vertex.position, 1.0));
     out.world_position = world_position;
     // Project the world position of the mesh into screen position

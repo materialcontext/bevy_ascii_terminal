@@ -17,7 +17,7 @@ fn main() {
         .insert_resource(ClearColor(Color::BLACK))
         .add_systems(Startup, spawn_terminal)
         .add_systems(Update, change_font)
-        .run()
+        .run();
 }
 
 #[derive(Default, Resource)]
