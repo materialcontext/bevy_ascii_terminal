@@ -86,3 +86,4 @@ pub(crate) fn clear_after_render(
 ) {
     q_term.iter_mut().for_each(|mut t| t.clear());
 }
+
